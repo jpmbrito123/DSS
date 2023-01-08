@@ -3,10 +3,7 @@ package data;
 import code.PlayerSet;
 
 import java.sql.*;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class PlayerSetDAO implements Map<String, PlayerSet> {
     private static PlayerSetDAO singleton = null;
@@ -80,11 +77,13 @@ public class PlayerSetDAO implements Map<String, PlayerSet> {
     }
 
     public PlayerSet get(Object key) {
-        PlayerSet p;
+        PlayerSet p = new PlayerSet();
         try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD); Statement stm = conn.createStatement()) {
             String sql = "SELECT * FROM PlayerSets WHERE Nome='" + key.toString() + "'";
             ResultSet rs = stm.executeQuery(sql);
-            p = new PlayerSet(rs.getString("ID"),rs.getDouble("Agressividade"),rs.getString("Piloto"),rs.getString("Carro"),rs.getString("Pneu"),rs.getInt("Alteracao"));
+            while(rs.next()){
+                p = new PlayerSet(rs.getString("ID"),rs.getDouble("Agressividade"),rs.getString("Piloto"),rs.getString("Carro"),rs.getString("Pneu"),rs.getInt("Alteracao"));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             throw new NullPointerException(e.getMessage());
@@ -121,7 +120,18 @@ public class PlayerSetDAO implements Map<String, PlayerSet> {
     public void clear() {}
 
     public Set<String> keySet() {
-        return null;
+        Set<String> set = new HashSet<>();
+        try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD); Statement stm = conn.createStatement()) {
+            String sql = "SELECT * FROM PlayerSets";
+            ResultSet rs = stm.executeQuery(sql);
+            while (rs.next()) {
+                set.add(rs.getString("ID"));
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+            throw new NullPointerException(e.getMessage());
+        }
+        return set;
     }
 
     public Collection<PlayerSet> values() {

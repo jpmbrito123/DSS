@@ -3,10 +3,7 @@ package data;
 import code.*;
 
 import java.sql.*;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class CarrosDAO implements Map<String,Carro> {
     private static CarrosDAO singleton = null;
@@ -83,28 +80,30 @@ public class CarrosDAO implements Map<String,Carro> {
     }
 
     public Carro get(Object key) {
-        Carro c;
+        Carro c = new C1();
         try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD); Statement stm = conn.createStatement()) {
             String sql = "SELECT * FROM Carros WHERE Nome='" + key.toString() + "'";
             ResultSet rs = stm.executeQuery(sql);
-            String id = rs.getString("ID");
-            String tipo = rs.getString("Tipo");
-            String marca = rs.getString("Marca");
-            String modelo = rs.getString("Modelo");
-            int cilindrada = rs.getInt("Cilindrdada");
-            int potencia = rs.getInt("Potencia");
-            double pac = rs.getDouble("Pac");
-            double fiabilidade = rs.getDouble("Fiabilidade");
-            if(Objects.equals(tipo,"C1")){
-                c = new C1(id,marca,modelo,cilindrada,potencia,pac,fiabilidade);
-            }else if(Objects.equals(tipo,"C2")){
-                double prep = rs.getDouble("Preparacao");
-                c = new C2(id,marca,modelo,cilindrada,potencia,pac,fiabilidade,prep);
-            }else if(Objects.equals(tipo,"GT")){
-                c = new GT(id,marca,modelo,cilindrada,potencia,pac,fiabilidade);
-            }else if(Objects.equals(tipo,"SC")){
-                c = new SC(id,marca,modelo,cilindrada,potencia,pac,fiabilidade);
-            }else c = null;
+            while(rs.next()) {
+                String id = rs.getString("ID");
+                String tipo = rs.getString("Tipo");
+                String marca = rs.getString("Marca");
+                String modelo = rs.getString("Modelo");
+                int cilindrada = rs.getInt("Cilindrdada");
+                int potencia = rs.getInt("Potencia");
+                double pac = rs.getDouble("Pac");
+                double fiabilidade = rs.getDouble("Fiabilidade");
+                if (Objects.equals(tipo, "C1")) {
+                    c = new C1(id, marca, modelo, cilindrada, potencia, pac, fiabilidade);
+                } else if (Objects.equals(tipo, "C2")) {
+                    double prep = rs.getDouble("Preparacao");
+                    c = new C2(id, marca, modelo, cilindrada, potencia, pac, fiabilidade, prep);
+                } else if (Objects.equals(tipo, "GT")) {
+                    c = new GT(id, marca, modelo, cilindrada, potencia, pac, fiabilidade);
+                } else if (Objects.equals(tipo, "SC")) {
+                    c = new SC(id, marca, modelo, cilindrada, potencia, pac, fiabilidade);
+                } else c = null;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             throw new NullPointerException(e.getMessage());
@@ -152,7 +151,18 @@ public class CarrosDAO implements Map<String,Carro> {
     public void clear() {}
 
     public Set<String> keySet() {
-        return null;
+        Set<String> set = new HashSet<>();
+        try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD); Statement stm = conn.createStatement()) {
+            String sql = "SELECT * FROM Carros";
+            ResultSet rs = stm.executeQuery(sql);
+            while (rs.next()) {
+                set.add(rs.getString("ID"));
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+            throw new NullPointerException(e.getMessage());
+        }
+        return set;
     }
 
     public Collection<Carro> values() {

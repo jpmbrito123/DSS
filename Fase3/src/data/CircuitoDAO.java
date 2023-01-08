@@ -4,6 +4,7 @@ import code.Circuito;
 
 import java.sql.*;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -84,11 +85,13 @@ public class CircuitoDAO implements Map<String, Circuito> {
     }
 
     public Circuito get(Object key) {
-        Circuito p ;
+        Circuito p = new Circuito();
         try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD); Statement stm = conn.createStatement()) {
             String sql = "SELECT * FROM Circuitos WHERE ID='" + key.toString() + "'";
             ResultSet rs = stm.executeQuery(sql);
-            p = new Circuito(rs.getString("ID"),rs.getInt("Chicane"),rs.getInt("Retas"),rs.getInt("Curvas"),rs.getInt("Distancia"),rs.getInt("Nvoltas"),rs.getDouble("Tempomedio"),rs.getDouble("Record"),rs.getDouble("TempoBox"),rs.getDouble("TempoDesvio"),rs.getString("DificuldadeRetas"),rs.getString("DificuldadeCurvas"));
+            while(rs.next()) {
+                p = new Circuito(rs.getString("ID"), rs.getInt("Chicane"), rs.getInt("Retas"), rs.getInt("Curvas"), rs.getInt("Distancia"), rs.getInt("Nvoltas"), rs.getDouble("Tempomedio"), rs.getDouble("Record"), rs.getDouble("TempoBox"), rs.getDouble("TempoDesvio"), rs.getString("DificuldadeRetas"), rs.getString("DificuldadeCurvas"));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             throw new NullPointerException(e.getMessage());
@@ -126,7 +129,18 @@ public class CircuitoDAO implements Map<String, Circuito> {
     public void clear() {}
 
     public Set<String> keySet() {
-        return null;
+        Set<String> set = new HashSet<>();
+        try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD); Statement stm = conn.createStatement()) {
+            String sql = "SELECT * FROM Circuitos";
+            ResultSet rs = stm.executeQuery(sql);
+            while (rs.next()) {
+                set.add(rs.getString("ID"));
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+            throw new NullPointerException(e.getMessage());
+        }
+        return set;
     }
 
     public Collection<Circuito> values() {

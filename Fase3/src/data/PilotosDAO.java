@@ -4,6 +4,7 @@ import code.Piloto;
 
 import java.sql.*;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -78,11 +79,13 @@ public class PilotosDAO implements Map<String, Piloto> {
     }
 
     public Piloto get(Object key) {
-        Piloto p ;
+        Piloto p = new Piloto();
         try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD); Statement stm = conn.createStatement()) {
             String sql = "SELECT * FROM Pilotos WHERE ID='" + key.toString() + "'";
             ResultSet rs = stm.executeQuery(sql);
-            p = new Piloto(rs.getString("ID"),rs.getInt("CTS"),rs.getDouble("SBA"),rs.getString("Nacionalidade"));
+            while(rs.next()){
+                p = new Piloto(rs.getString("ID"),rs.getInt("CTS"),rs.getDouble("SBA"),rs.getString("Nacionalidade"));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             throw new NullPointerException(e.getMessage());
@@ -119,7 +122,18 @@ public class PilotosDAO implements Map<String, Piloto> {
     public void clear() {}
 
     public Set<String> keySet() {
-        return null;
+        Set<String> set = new HashSet<>();
+        try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD); Statement stm = conn.createStatement()) {
+            String sql = "SELECT * FROM Pilotos";
+            ResultSet rs = stm.executeQuery(sql);
+            while (rs.next()) {
+                set.add(rs.getString("ID"));
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+            throw new NullPointerException(e.getMessage());
+        }
+        return set;
     }
 
     public Collection<Piloto> values() {
