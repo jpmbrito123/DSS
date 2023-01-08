@@ -2,6 +2,7 @@ package code;
 
 import data.CarrosDAO;
 import data.PilotosDAO;
+import data.PlayerSetDAO;
 
 import java.util.Random;
 
@@ -28,6 +29,7 @@ public class PlayerSet {
         this.carro = carro;
         this.countAlteracoes = 0;
     }
+    public PlayerSet(){};
 
     public boolean despistar(int totalVoltas){
         Carro c = CarrosDAO.getInstance().get(this.carro);

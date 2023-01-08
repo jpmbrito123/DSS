@@ -1,5 +1,7 @@
 package code;
 
+import data.PilotosDAO;
+
 public class Piloto {
     //private int Id;
     private String nomePiloto;
@@ -13,6 +15,7 @@ public class Piloto {
         this.sba = sba;
         this.nacionalidade = nacionalidade;
     }
+    public Piloto (){}
     public String getNomePiloto() {
         return nomePiloto;
     }
