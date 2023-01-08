@@ -2,7 +2,6 @@ package code;
 
 import data.CarrosDAO;
 import data.PilotosDAO;
-import data.PlayerSetDAO;
 
 import java.util.Random;
 
@@ -14,6 +13,14 @@ public class PlayerSet {
     private String pneu;
     private int countAlteracoes;
 
+    public PlayerSet(){
+        this.idPlayerSet = "";
+        this.agressividadeMotriz = 3;
+        this.piloto = "";
+        this.carro = "";
+        this.pneu = "";
+        this.countAlteracoes = 0;
+    }
     public PlayerSet(String id,double agress,String piloto,String carro,String pneu,int alteraçao){
         this.idPlayerSet = id;
         this.agressividadeMotriz = agress;
@@ -29,7 +36,6 @@ public class PlayerSet {
         this.carro = carro;
         this.countAlteracoes = 0;
     }
-    public PlayerSet(){};
 
     public boolean despistar(int totalVoltas){
         Carro c = CarrosDAO.getInstance().get(this.carro);

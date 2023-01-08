@@ -56,4 +56,8 @@ public interface IUtilizadorFacade {
     public void retiraPiloto(String s);
 
     public void retiraCarro(String s);
+
+    public void mostracircuitos();
+
+    public void adicionacampeonato(String name);
 }

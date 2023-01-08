@@ -1,5 +1,6 @@
 package ui;
 
+import code.Campeonato;
 import code.IUtilizadorFacade;
 import code.Utilizador;
 import code.UtilizadorFacade;
@@ -15,8 +16,11 @@ public class CampeonatoUI {
     // Scanner para leitura
     private Scanner scin;
     private String nome;
+
+    private Campeonato c;
     public CampeonatoUI(String nome) {
         this.nome = nome;
+        this.c = new Campeonato(nome);
 
         // Criar o menu
         this.menu = new Menu(nome,new String[]{
@@ -35,7 +39,7 @@ public class CampeonatoUI {
 
 
     public void run() {
-        this.menu.runOnce();
+        this.menu.run();
         System.out.println("Até breve!...");
     }
 
@@ -44,7 +48,8 @@ public class CampeonatoUI {
             System.out.println("Inserir nome do novo Player: ");
             String nome = scin.nextLine();
             if (!this.modelUtilizador.existePlayer(nome)) {
-                new PlayerUI(nome);
+                new PlayerUI(nome).run();
+                c.addPlayersets(nome);
             } else {
                 System.out.println("Este player ja existe!!!");
             }
@@ -56,7 +61,7 @@ public class CampeonatoUI {
 
     private void trataReady() {
         try {
-            this.modelUtilizador.ready(nome);
+            this.c.putallready();
         }
         catch (NullPointerException e) {
             System.out.println(e.getMessage());
@@ -66,13 +71,14 @@ public class CampeonatoUI {
             System.out.println("Insira a quantidade de circuitos");
             int n = scin.nextInt();
             scin.nextLine();
+            this.modelUtilizador.mostracircuitos();
             for(int i = 0;i<n;i++){
                 System.out.println("Indique o nome do circuito que pretende adicionar");
                 String circuito = scin.nextLine();
                 if(!this.modelUtilizador.existeCircuito(circuito)){
                     System.out.println("Circuito nao existe");
                 }else {
-                    this.modelUtilizador.adicionaCircuitoCampeonato(nome,circuito);
+                    this.c.criaCorrida(circuito);
                     System.out.println("Circuito adicionado com sucesso!");
                 }
         }

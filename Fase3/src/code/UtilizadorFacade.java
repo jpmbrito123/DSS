@@ -89,15 +89,18 @@ public class UtilizadorFacade implements IUtilizadorFacade{
         }
     }
 
+    public void adicionacampeonato(String name){
+        campeonatos.put(name,new Campeonato(name));
+    }
+
     public boolean existePlayer(String nome){
         return players.containsKey(nome);
     }
 
     public void mostraCarros(){
         System.out.println("Carros disponiveis: ");
-        for (Map.Entry<String,Carro> pair: carros.entrySet()) {
-            System.out.println(pair.getKey()+":");
-            pair.getValue().toString();
+        for (String cars: carros.keySet()) {
+            System.out.println(cars+" ");
 
         }
     }
@@ -119,7 +122,8 @@ public class UtilizadorFacade implements IUtilizadorFacade{
     }
 
     public void mostraPilotos(){
-        for (Piloto p: pilotos.values()){
+        for (String pil: pilotos.keySet()){
+            Piloto p = pilotos.get(pil);
             System.out.println(p.getNomePiloto() + ": SvA-" + p.getSba() + " CTS-" + p.getCts() + " Nacionalidade-" + p.getNacionalidade());
         }
     }
@@ -163,6 +167,12 @@ public class UtilizadorFacade implements IUtilizadorFacade{
                 pilotos.remove(pair.getKey());
             }
 
+        }
+    }
+
+    public void mostracircuitos(){
+        for (String c:circuitos.keySet()){
+            System.out.println(c+" ");
         }
     }
 

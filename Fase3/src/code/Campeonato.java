@@ -11,7 +11,12 @@ public class Campeonato {
     private List<String> playerssets = new ArrayList<>();
     private List<Corrida> corridas = new ArrayList<>();
 
-    public Campeonato(String nomeCampeonato,List<String> circuitos) {
+    public Campeonato(String nomeCampeonato) {
+        this.nomeCampeonato = nomeCampeonato;
+        this.corridasRealizadas= 0;
+    }
+
+    public Campeonato(String nomeCampeonato, List<String> circuitos) {
         this.nomeCampeonato = nomeCampeonato;
         this.corridasRealizadas = 0;
         for (String c:circuitos){

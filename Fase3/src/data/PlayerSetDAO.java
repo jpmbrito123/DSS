@@ -15,7 +15,7 @@ public class PlayerSetDAO implements Map<String, PlayerSet> {
                     "Agressividade double NOT NULL,"+
                     "Piloto varchar(45),foreign key(Piloto) references Pilotos(ID),"+
                     "Carro varchar(45) ,foreign key(Carro) references Carros(ID),"+
-                    "Pneu int NOT NULL,"+
+                    "Pneu varchar(45) NOT NULL,"+
                     "Alteracao int NOT NULL )";
             stm.executeUpdate(sql);
         } catch (SQLException e) {
@@ -94,7 +94,7 @@ public class PlayerSetDAO implements Map<String, PlayerSet> {
     public PlayerSet put(String key,PlayerSet value) {
         PlayerSet p = value;
         try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD); Statement stm = conn.createStatement()) {
-            String sql = "INSERT INTO PlayerSets VALUES('"+ p.getIdPlayerSet()+"','"+ p.getAgressividadeMotriz()+"','"+p.getPiloto()+"','"+ p.getCarro()+"','"+p.getPneu()+"','"+ p.getCountAlteracoes()+"´)";
+            String sql = "INSERT INTO PlayerSets VALUES('"+ p.getIdPlayerSet()+"','"+ p.getAgressividadeMotriz()+"','"+p.getPiloto()+"','"+ p.getCarro()+"','"+p.getPneu()+"','"+ p.getCountAlteracoes()+"')";
             stm.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();

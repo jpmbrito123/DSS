@@ -31,12 +31,22 @@ public class TextUI {
                 "Criar Piloto",
                 "Criar Carro",
                 "Escolher Campeonato",
+                "Remove Campeonato",
+                "Remove Carro",
+                "Remove Circuito",
+                "Remove Piloto"
+
         });
         this.menu.setHandler(1, this::trataCriarCampeonatos);
         this.menu.setHandler(2, this::trataCriarCircuitos);
         this.menu.setHandler(3, this::trataCriarPiloto);
         this.menu.setHandler(4, this::trataCriarCarro);
         this.menu.setHandler(5, this::trataEscolherCampeonato);
+        this.menu.setHandler(6, this::trataRemoverCampeonato);
+        this.menu.setHandler(7, this::trataRemoverCarro);
+        this.menu.setHandler(8, this::trataRemoverCircuito);
+        this.menu.setHandler(9, this::trataRemoverPiloto);
+
 
 
         this.modelUtilizador = new UtilizadorFacade();
@@ -99,6 +109,7 @@ public class TextUI {
             String nome = scin.nextLine();
             if(!this.modelUtilizador.existeCampeonato(nome)){
                 System.out.println("Campeonato criado!");
+                this.modelUtilizador.adicionacampeonato(nome);
             }else {
                 System.out.println("Nome ja existe!!!");
             }
@@ -216,7 +227,7 @@ public class TextUI {
             System.out.println("Escolher campeonato ");
             String camp = scin.nextLine();
             if(this.modelUtilizador.existeCampeonato(camp)) {
-                new CampeonatoUI(camp);
+                new CampeonatoUI(camp).run();
             }else {
                 System.out.println("Esse campeonato nao existe!!!");
             }

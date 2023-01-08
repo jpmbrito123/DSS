@@ -79,7 +79,7 @@ public class PilotosDAO implements Map<String, Piloto> {
     }
 
     public Piloto get(Object key) {
-        Piloto p = new Piloto();
+        Piloto p = new Piloto("",0,0,"");
         try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD); Statement stm = conn.createStatement()) {
             String sql = "SELECT * FROM Pilotos WHERE ID='" + key.toString() + "'";
             ResultSet rs = stm.executeQuery(sql);
@@ -96,7 +96,7 @@ public class PilotosDAO implements Map<String, Piloto> {
     public Piloto put(String key, Piloto value) {
         Piloto p = value;
         try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD); Statement stm = conn.createStatement()) {
-            String sql = "INSERT INTO Pilotos VALUES('"+p.getNomePiloto()+"','"+ p.getCts()+"','"+ p.getSba()+"','"+ p.getNacionalidade()+"´)";
+            String sql = "INSERT INTO Pilotos VALUES('"+p.getNomePiloto()+"','"+ p.getCts()+"','"+ p.getSba()+"','"+ p.getNacionalidade()+"')";
             stm.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();
