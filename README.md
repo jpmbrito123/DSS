@@ -1,28 +1,40 @@
 # DSS - Racing Manager Simulation
 
+This project was developed as part of the **Software Systems Development** course in the Computer Engineering program at the University of Minho. The goal is to design and implement a simulation-based application where users manage and compete in car racing championships, inspired by games like F1 Manager.
 
-Este projeto é desenvolvido no âmbito da unidade curricular de Desenvolvimento de Sistemas de Software, do curso de Engenharia Informática da Universidade do Minho. O objetivo é conceber e implementar uma aplicação que permita simular campeonatos de automobilismo, similar ao jogo F1 Manager. A aplicação será utilizada por jogadores que competem em provas automobilísticas que o software simulará.
+## Project Objective
 
-## Objetivo do Trabalho
-O trabalho consiste em desenvolver uma aplicação que permita:
+The application allows users to:
 
-- Criar e gerenciar campeonatos de automobilismo.
-- Adicionar circuitos, carros e pilotos.
-- Configurar e simular corridas de acordo com os parâmetros definidos.
-- Registrar e visualizar os resultados das corridas e campeonatos.
+- Create and manage racing championships.
+- Add circuits, cars and drivers to the system.
+- Configure races using customizable parameters.
+- Simulate races and view results across multiple events and seasons.
 
-## Cenários de Utilização
-### Cenário 1: Campeonatos
-O administrador pode criar e gerenciar campeonatos, incluindo a seleção de circuitos e a disponibilização dos campeonatos para os jogadores.
+## Usage Scenarios
 
-### Cenário 2: Circuitos
-O administrador pode adicionar novos circuitos, especificando detalhes como comprimento, número de curvas, chicanes e grau de dificuldade de ultrapassagem (GDU) para cada segmento.
+### Championship Management
 
-### Cenário 3: Carros
-O administrador pode adicionar novos carros, especificando a categoria, marca, modelo, cilindrada, potência do motor e perfil aerodinâmico.
+Administrators can create and configure championships, select circuits and make them available for players to participate in.
 
-### Cenário 4: Pilotos
-O administrador pode adicionar novos pilotos, definindo os níveis de perícia em diferentes condições, como tempo seco versus chuva e segurança versus agressividade.
+### Circuit Configuration
 
-### Cenário 5: Jogar
-Os jogadores podem configurar campeonatos, escolher carros e pilotos, ajustar configurações dos carros e participar de corridas simuladas pelo sistema.
+New circuits can be added with detailed information such as total length, number of curves, chicanes and overtaking difficulty (OD) for each segment.
+
+### Car Management
+
+Cars can be registered into the system by specifying key technical characteristics such as category, brand, model, engine capacity, power and aerodynamic profile.
+
+### Driver Management
+
+Drivers are created with skill levels across different racing conditions (e.g., dry vs. rainy weather) and behavioral traits (e.g., aggressiveness vs. safety).
+
+### Game Simulation
+
+Players can choose drivers and cars, configure car settings and participate in simulated races. The system processes race events and provides detailed performance and result tracking.
+
+## Technologies
+
+- Language: Java
+- Development Model: Object-Oriented Programming
+- Input/Output: Text-based user interface
